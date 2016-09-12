@@ -40,6 +40,49 @@ define( 'S3_UPLOADS_SECRET', '' );
 define( 'S3_UPLOADS_REGION', '' ); // the s3 bucket region, required for Frankfurt and Beijing.
 ```
 
+Set up for multisite
+```PHP
+//in wp-config.php
+define('S3_UPLOADS_MULTISITE_CONFIG', __DIR__. '/s3_uploads_credential.conf.php');
+
+//in s3_uploads_credential.conf.php
+return array(
+    //blog id => [configs]
+    1 => [   //Default config
+        'S3_UPLOADS_BUCKET' => 'example',
+        'S3_UPLOADS_KEY' => 'key',
+        'S3_UPLOADS_SECRET' => 'secret'
+        'S3_UPLOADS_REGION' => 'region',
+    ],
+    2 => [
+        'S3_UPLOADS_BUCKET' => 'example',
+        'S3_UPLOADS_KEY' => 'key',
+        'S3_UPLOADS_SECRET' => 'secret',
+        'S3_UPLOADS_REGION' => 'region',
+    ]
+);
+```
+
+in PHP 7 you can do following definition alternatively
+```PHP
+//PHP7
+define(S3_UPLOADS_MULTISITE_CONFIG, array(
+    //blog id => [configs]
+    1 => [   //Default config
+        'S3_UPLOADS_BUCKET' => 'example',
+        'S3_UPLOADS_KEY' => 'key',
+        'S3_UPLOADS_SECRET' => 'secret'
+        'S3_UPLOADS_REGION' => 'region',
+    ],
+    2 => [
+        'S3_UPLOADS_BUCKET' => 'example',
+        'S3_UPLOADS_KEY' => 'key',
+        'S3_UPLOADS_SECRET' => 'secret',
+        'S3_UPLOADS_REGION' => 'region',
+    ]
+));
+```
+
 You must then enable the plugin. To do this via WP-CLI use command:
 
 ```

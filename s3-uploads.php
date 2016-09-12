@@ -19,6 +19,29 @@ function s3_uploads_init() {
 		return;
 	}
 
+    if ( is_multisite() && defined( 'S3_UPLOADS_MULTISITE_CONFIG' ) ) {
+        //$config = include_once constant(
+        if (is_string(S3_UPLOADS_MULTISITE_CONFIG)) {
+            $config = include_once(S3_UPLOADS_MULTISITE_CONFIG);
+        } elseif (is_array(S3_UPLOADS_MULTISITE_CONFIG)) {
+            $config = S3_UPLOADS_MULTISITE_CONFIG; // > PHP 7
+        }
+        $blogId = get_current_blog_id();
+        $values = [];
+        if (isset($config[$blogId])) {
+            $values = $config[$blogId];
+        } elseif (is_array($config)) { //default value is the first one
+            $values = reset($config); 
+        } else {
+            return;
+        }
+        foreach ($values as $name => $value) {
+            if (strpos($name, 'S3_UPLOADS_')) {
+                define($name, $value);
+            }
+        }
+    }
+
 	if ( ! defined( 'S3_UPLOADS_BUCKET' ) ) {
 		return;
 	}
