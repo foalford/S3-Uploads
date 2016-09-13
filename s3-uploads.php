@@ -36,7 +36,7 @@ function s3_uploads_init() {
             return;
         }
         foreach ($values as $name => $value) {
-            if (strpos($name, 'S3_UPLOADS_')) {
+            if (0 === strpos($name, 'S3_UPLOADS_')) {
                 define($name, $value);
             }
         }
